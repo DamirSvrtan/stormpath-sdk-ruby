@@ -1,5 +1,5 @@
 #
-# Copyright 2013 Stormpath, Inc.
+# Copyright 2014 Stormpath, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,14 @@
 # limitations under the License.
 #
 module Stormpath
-  VERSION = '1.0.0.beta.6'
-  VERSION_DATE = '2014-05-21'
+  module Provider
+    class AccountResult < Stormpath::Resource::Base
+
+      prop_reader :is_new_account
+
+      alias_method :is_new_account?, :is_new_account
+
+      has_one :account
+    end
+  end
 end

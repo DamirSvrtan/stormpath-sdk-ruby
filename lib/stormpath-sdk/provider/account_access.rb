@@ -1,5 +1,5 @@
 #
-# Copyright 2013 Stormpath, Inc.
+# Copyright 2014 Stormpath, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,15 @@
 # limitations under the License.
 #
 module Stormpath
-  VERSION = '1.0.0.beta.6'
-  VERSION_DATE = '2014-05-21'
+  module Provider
+    class AccountAccess < Stormpath::Resource::Base
+
+      PROVIDER_DATA = :provider_data
+
+      def provider_data=(provider_data)
+        set_property PROVIDER_DATA, provider_data
+      end
+
+    end
+  end
 end

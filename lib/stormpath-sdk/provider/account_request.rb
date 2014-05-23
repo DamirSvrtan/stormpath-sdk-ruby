@@ -1,5 +1,5 @@
 #
-# Copyright 2013 Stormpath, Inc.
+# Copyright 2014 Stormpath, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,17 @@
 # limitations under the License.
 #
 module Stormpath
-  VERSION = '1.0.0.beta.6'
-  VERSION_DATE = '2014-05-21'
+  module Provider
+    class AccountRequest
+
+      attr_accessor :provider, :token_type, :token_value
+
+      def initialize(provider, token_type, token_value) 
+        @provider = provider
+        @token_type = token_type
+        @token_value = token_value
+      end
+
+    end
+  end
 end
