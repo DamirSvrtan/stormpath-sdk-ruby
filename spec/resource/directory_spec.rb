@@ -187,19 +187,19 @@ describe Stormpath::Resource::Directory, :vcr do
     end
 
     it 'and all of its associations' do
-      expect(directory.groups).to have(1).item
-      expect(directory.accounts).to have(1).item
+      expect(directory.groups.count).to eq(1)
+      expect(directory.accounts.count).to eq(1)
 
       expect(application.account_store_mappings.first.account_store).to eq(directory)
 
       expect(application.accounts).to include(account)
       expect(application.groups).to include(group)
 
-      expect(application.account_store_mappings).to have(1).item
+      expect(application.account_store_mappings.count).to eq(1)
 
       directory.delete
 
-      expect(application.account_store_mappings).to have(0).item
+      expect(application.account_store_mappings.count).to eq(0)
 
       expect(application.accounts).not_to include(account)
       expect(application.groups).not_to include(group)

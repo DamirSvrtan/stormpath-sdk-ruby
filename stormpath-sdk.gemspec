@@ -1,4 +1,6 @@
-require "./lib/stormpath-sdk/version"
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require "stormpath-sdk/version"
 
 Gem::Specification.new do |s|
   s.name = 'stormpath-sdk'

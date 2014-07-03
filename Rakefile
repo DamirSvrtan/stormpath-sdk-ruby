@@ -1,21 +1,20 @@
 require 'rubygems'
 require 'rubygems/package_task'
 require 'rspec/core/rake_task'
+spec = eval(File.read('stormpath-sdk.gemspec'))
 require 'stormpath-sdk'
 require './support/api'
-
-spec = eval(File.read('stormpath-sdk.gemspec'))
 
 Gem::PackageTask.new(spec) do |p|
   p.gem_spec = spec
 end
 
 RSpec::Core::RakeTask.new do |t|
-  t.pattern = '**/*_spec.rb'
+  t.pattern = 'spec/**/*_spec.rb'
   t.rspec_opts = ['-c']
 end
 
-task :default => :spec
+task default: :spec
 
 namespace :api do
   task :clean do

@@ -36,4 +36,12 @@ class Stormpath::Error < RuntimeError
     !@error.nil? ? @error.more_info : nil
   end
 
+  class NullError < RuntimeError
+    def initialize; end
+    def message; ''; end
+    def status; -1; end
+    def code; -1; end
+    def developer_message; end
+    def more_info; end
+  end
 end
