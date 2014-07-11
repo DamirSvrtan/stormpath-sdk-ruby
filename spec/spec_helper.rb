@@ -104,6 +104,25 @@ module Stormpath
       end
     end
   end
+
+  module RandomResourceNameGenerator
+    include UUIDTools
+    def random_application_name
+      "#{random_string}_test_application"
+    end
+
+    def random_directory_name
+      "#{random_string}_test_directory"
+    end
+
+    def random_group_name
+      "#{random_string}_test_group"
+    end
+
+    def random_string
+      UUID.method(:random_create).call.to_s[0..9]
+    end
+  end
 end
 
 RSpec.configure do |c|
@@ -117,6 +136,7 @@ RSpec.configure do |c|
 
   c.include Stormpath::TestApiKeyHelpers
   c.include Stormpath::TestResourceHelpers
+  c.include Stormpath::RandomResourceNameGenerator
 
   c.treat_symbols_as_metadata_keys_with_true_values = true
 

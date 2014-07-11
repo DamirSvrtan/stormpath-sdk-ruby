@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Stormpath::Resource::Directory, :vcr do
 
   describe "instances should respond to attribute property methods" do
-    subject(:directory) { test_api_client.directories.create name: 'some_test_directory', description: 'description_for_some_test_directory' }
+    subject(:directory) { test_api_client.directories.create name: random_directory_name, description: 'description_for_some_test_directory' }
 
     it { should be_instance_of Stormpath::Resource::Directory }
 
@@ -42,7 +42,7 @@ describe Stormpath::Resource::Directory, :vcr do
     end
 
     context '#groups' do
-      let(:group) { directory.groups.create name: "test_group"}
+      let(:group) { directory.groups.create name: random_group_name }
 
       after do
         group.delete if group
@@ -170,9 +170,9 @@ describe Stormpath::Resource::Directory, :vcr do
 
   describe '#delete_directory' do
 
-    let(:directory) { test_api_client.directories.create name: 'test_directory' }
+    let(:directory) { test_api_client.directories.create name: random_directory_name }
 
-    let(:application) { test_api_client.applications.create name: 'test_application' }
+    let(:application) { test_api_client.applications.create name: random_application_name }
 
     let!(:group) { directory.groups.create name: 'someGroup' }
 

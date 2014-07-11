@@ -69,7 +69,7 @@ describe Stormpath::Resource::Application, :vcr do
     end
 
     context '#groups' do
-      let(:group) { application.groups.create name: "test_group"}
+      let(:group) { application.groups.create name: random_group_name }
 
       after do
         group.delete if group
@@ -86,7 +86,7 @@ describe Stormpath::Resource::Application, :vcr do
     end
 
   end
-  
+
   describe '#authenticate_account' do
     let(:account) do
       directory.accounts.create build_account(password: 'P@$$w0rd')
@@ -132,10 +132,10 @@ describe Stormpath::Resource::Application, :vcr do
     after do
       account.delete if account
     end
-    
-    context 'given a proper directory' do 
+
+    context 'given a proper directory' do
       let(:account) { directory.accounts.create build_account(password: 'P@$$w0rd') }
-      
+
       let(:login_request) do
         Stormpath::Authentication::UsernamePasswordRequest.new account.username, password, account_store: directory
       end
@@ -149,7 +149,7 @@ describe Stormpath::Resource::Application, :vcr do
     end
 
     context 'given a wrong directory' do
-      let(:new_directory) { test_api_client.directories.create name: 'test_account_store'}
+      let(:new_directory) { test_api_client.directories.create name: random_directory_name }
 
       let(:account) { new_directory.accounts.create build_account(password: 'P@$$w0rd') }
 
@@ -167,7 +167,7 @@ describe Stormpath::Resource::Application, :vcr do
     end
 
     context 'given a group' do
-      let(:group) {directory.groups.create name: "test_group"}
+      let(:group) {directory.groups.create name: random_group_name }
 
       let(:account) { directory.accounts.create build_account(password: 'P@$$w0rd') }
 
