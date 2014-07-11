@@ -296,7 +296,7 @@ properties
     context 'pagination' do
       let!(:applications) do
         (0..2).to_a.map do |index|
-          test_api_client.applications.create name: "Pagination Test #{index + 1}", description: 'foo'
+          test_api_client.applications.create name: random_application_name, description: 'foo'
         end
       end
 
