@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Stormpath::Provider::Provider, :vcr do
 
-  let(:application) do 
-    test_api_client.applications.create name: 'Test Provider Application', 
+  let(:application) do
+    test_api_client.applications.create name: random_application_name,
                                         description: 'Test Provider Application for AccountStoreMappings'
   end
 

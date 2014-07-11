@@ -52,7 +52,7 @@ describe Stormpath::Resource::Application, :vcr do
   describe 'application_associations' do
 
     context '#accounts' do
-      let(:account) { application.accounts.create build_account}
+      let(:account) { application.accounts.create build_account(email: random_email)}
 
       after do
         account.delete if account
@@ -89,7 +89,7 @@ describe Stormpath::Resource::Application, :vcr do
 
   describe '#authenticate_account' do
     let(:account) do
-      directory.accounts.create build_account(password: 'P@$$w0rd')
+      directory.accounts.create build_account(password: 'P@$$w0rd', email: random_email)
     end
 
     let(:login_request) do
@@ -134,7 +134,7 @@ describe Stormpath::Resource::Application, :vcr do
     end
 
     context 'given a proper directory' do
-      let(:account) { directory.accounts.create build_account(password: 'P@$$w0rd') }
+      let(:account) { directory.accounts.create build_account(password: 'P@$$w0rd', email: random_email) }
 
       let(:login_request) do
         Stormpath::Authentication::UsernamePasswordRequest.new account.username, password, account_store: directory
@@ -151,7 +151,7 @@ describe Stormpath::Resource::Application, :vcr do
     context 'given a wrong directory' do
       let(:new_directory) { test_api_client.directories.create name: random_directory_name }
 
-      let(:account) { new_directory.accounts.create build_account(password: 'P@$$w0rd') }
+      let(:account) { new_directory.accounts.create build_account(password: 'P@$$w0rd', email: random_email) }
 
       let(:login_request) do
         Stormpath::Authentication::UsernamePasswordRequest.new account.username, password, account_store: directory
@@ -169,7 +169,7 @@ describe Stormpath::Resource::Application, :vcr do
     context 'given a group' do
       let(:group) {directory.groups.create name: random_group_name }
 
-      let(:account) { directory.accounts.create build_account(password: 'P@$$w0rd') }
+      let(:account) { directory.accounts.create build_account(password: 'P@$$w0rd', email: random_email) }
 
       let(:login_request) do
         Stormpath::Authentication::UsernamePasswordRequest.new account.username, password, account_store: group
@@ -201,7 +201,7 @@ describe Stormpath::Resource::Application, :vcr do
   describe '#send_password_reset_email' do
     context 'given an email' do
       context 'of an exisiting account on the application' do
-        let(:account) { directory.accounts.create build_account  }
+        let(:account) { directory.accounts.create build_account(email: random_email)  }
 
         let(:sent_to_account) { application.send_password_reset_email account.email }
 

@@ -337,11 +337,12 @@ properties
       end
 
       let(:directory) do
-        client.directories.create name: 'testDirectory'
+        client.directories.create name: random_directory_name
+
       end
 
       let(:group) do
-        directory.groups.create name: 'someGroup'
+        directory.groups.create name: random_group_name
       end
 
       let(:account) do
@@ -385,7 +386,7 @@ properties
         end
 
         let(:group) do
-          directory.groups.create name: 'someGroup'
+          directory.groups.create name: random_group_name
         end
 
         before do
@@ -401,16 +402,20 @@ properties
     end
 
     context 'search' do
+
+      let(:first_application_name) { random_application_name }
+      let(:second_application_name ) { random_application_name }
+
       let!(:applications) do
         [
-          test_api_client.applications.create(name: 'Test Alpha', description: 'foo'),
-          test_api_client.applications.create(name: 'Test Beta', description: 'foo')
+          test_api_client.applications.create(name: first_application_name, description: 'foo'),
+          test_api_client.applications.create(name: second_application_name, description: 'foo')
         ]
       end
 
       context 'by any attribute' do
         let(:search_results) do
-          test_api_client.applications.search('Test Alpha')
+          test_api_client.applications.search(first_application_name)
         end
 
         it 'returns the application' do
@@ -420,7 +425,7 @@ properties
 
       context 'by an explicit attribute' do
         let(:search_results) do
-          test_api_client.applications.search(name: 'Test Alpha')
+          test_api_client.applications.search(name: first_application_name)
         end
 
         it 'returns the application' do
@@ -436,7 +441,7 @@ properties
     end
 
     describe '.create' do
-      let(:application_name) { 'Client Application Create Test' }
+      let(:application_name) { random_application_name }
 
       let(:application_attributes) do
         {
@@ -580,11 +585,11 @@ properties
 
     context 'given a collection with a limit' do
       let!(:directory_1) do
-        test_api_client.directories.create name: "0000_test_directory_with_limit"
+        test_api_client.directories.create name: random_directory_name
       end
 
       let!(:directory_2) do
-        test_api_client.directories.create name: "0001_test_directory_with_limit"
+        test_api_client.directories.create name: random_directory_name
       end
 
       after do
@@ -598,9 +603,12 @@ properties
     end
 
     describe '.create' do
+
+      let(:directory_name) { random_directory_name }
+
       let(:directory_attributes) do
         {
-          name: 'Client Directory Create Test',
+          name: directory_name,
           description: 'A test description'
         }
       end

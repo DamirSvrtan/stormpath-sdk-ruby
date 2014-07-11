@@ -118,6 +118,10 @@ module Stormpath
       "#{random_string}_test_group"
     end
 
+    def random_email
+      "#{random_string}@stormpath.com"
+    end
+
     def random_string
       UUID.method(:random_create).call.to_s[0..9]
     end
