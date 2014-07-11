@@ -6,7 +6,6 @@ SimpleCov.start
 
 require 'stormpath-sdk'
 require 'pry'
-require 'pry-debugger'
 require 'webmock/rspec'
 require 'vcr'
 require_relative '../support/api.rb'

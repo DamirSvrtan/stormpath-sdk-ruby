@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry-debugger'
 
 describe Stormpath::Resource::Account, :vcr do
 
