@@ -150,10 +150,10 @@ RSpec.configure do |c|
       raise set_up_message
     end
 
-    destroy_all_stormpath_test_resources unless HIJACK_HTTP_REQUESTS_WITH_VCR
+    # destroy_all_stormpath_test_resources unless HIJACK_HTTP_REQUESTS_WITH_VCR
   end
 
-  c.after(:all) do
-    destroy_all_stormpath_test_resources unless HIJACK_HTTP_REQUESTS_WITH_VCR
-  end
+  # c.after(:all) do
+    # destroy_all_stormpath_test_resources unless HIJACK_HTTP_REQUESTS_WITH_VCR
+  # end
 end
