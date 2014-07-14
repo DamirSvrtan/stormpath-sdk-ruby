@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe Stormpath::Resource::Application, :vcr do
   let(:application) { test_application }
-  let(:directory) { test_directory }
+  let(:directory) { test_api_client.directories.create name: random_directory_name }
+
+  after do
+    directory.delete if directory
+  end
 
   describe "instances should respond to attribute property methods" do
     subject(:application) { test_application }
@@ -100,6 +104,10 @@ describe Stormpath::Resource::Application, :vcr do
       application.authenticate_account login_request
     end
 
+    before do
+      test_api_client.account_store_mappings.create({ application: application, account_store: directory })
+    end
+
     after do
       account.delete if account
     end
@@ -129,6 +137,10 @@ describe Stormpath::Resource::Application, :vcr do
 
     let(:authentication_result) { application.authenticate_account login_request }
 
+    before do
+      test_api_client.account_store_mappings.create({ application: application, account_store: directory })
+    end
+
     after do
       account.delete if account
     end
@@ -149,7 +161,7 @@ describe Stormpath::Resource::Application, :vcr do
     end
 
     context 'given a wrong directory' do
-      let(:new_directory) { test_api_client.directories.create name: random_directory_name }
+      let(:new_directory) { test_api_client.directories.create name: random_directory_name('new') }
 
       let(:account) { new_directory.accounts.create build_account(password: 'P@$$w0rd', email: random_email) }
 
@@ -205,6 +217,10 @@ describe Stormpath::Resource::Application, :vcr do
 
         let(:sent_to_account) { application.send_password_reset_email account.email }
 
+        before do
+          test_api_client.account_store_mappings.create({ application: application, account_store: directory })
+        end
+
         after do
           account.delete if account
         end
@@ -243,6 +259,10 @@ describe Stormpath::Resource::Application, :vcr do
 
     let(:reset_password_account) do
       application.verify_password_reset_token password_reset_token
+    end
+
+    before do
+      test_api_client.account_store_mappings.create({ application: application, account_store: directory })
     end
 
     after do
