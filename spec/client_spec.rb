@@ -296,7 +296,7 @@ properties
     context 'pagination' do
       let!(:applications) do
         (0..2).to_a.map do |index|
-          test_api_client.applications.create name: random_application_name, description: 'foo'
+          test_api_client.applications.create name: random_application_name(index), description: 'foo'
         end
       end
 
@@ -338,7 +338,6 @@ properties
 
       let(:directory) do
         client.directories.create name: random_directory_name
-
       end
 
       let(:group) do
@@ -403,8 +402,8 @@ properties
 
     context 'search' do
 
-      let(:first_application_name) { random_application_name }
-      let(:second_application_name ) { random_application_name }
+      let(:first_application_name) { random_application_name(1) }
+      let(:second_application_name ) { random_application_name(2) }
 
       let!(:applications) do
         [
@@ -585,11 +584,11 @@ properties
 
     context 'given a collection with a limit' do
       let!(:directory_1) do
-        test_api_client.directories.create name: random_directory_name
+        test_api_client.directories.create name: random_directory_name(1)
       end
 
       let!(:directory_2) do
-        test_api_client.directories.create name: random_directory_name
+        test_api_client.directories.create name: random_directory_name(2)
       end
 
       after do

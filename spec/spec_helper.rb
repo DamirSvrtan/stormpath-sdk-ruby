@@ -106,16 +106,11 @@ module Stormpath
 
   module RandomResourceNameGenerator
     include UUIDTools
-    def random_application_name
-      "#{random_string}_test_application"
-    end
 
-    def random_directory_name
-      "#{random_string}_test_directory"
-    end
-
-    def random_group_name
-      "#{random_string}_test_group"
+    %w(application directory group).each do |resource|
+      define_method "random_#{resource}_name" do |suffix=nil|
+        "#{random_string}_#{resource}_#{suffix}"
+      end
     end
 
     def random_email
@@ -123,7 +118,11 @@ module Stormpath
     end
 
     def random_string
-      UUID.method(:random_create).call.to_s[0..9]
+      if HIJACK_HTTP_REQUESTS_WITH_VCR
+        'test'
+      else
+        UUID.method(:random_create).call.to_s[0..9]
+      end
     end
   end
 end
