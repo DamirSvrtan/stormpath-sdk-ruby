@@ -23,6 +23,12 @@ VCR.configure do |c|
   c.ignore_request { |r| HIJACK_HTTP_REQUESTS_WITH_VCR == false }
 end
 
+RSpec::Matchers.define :be_boolean do
+  match do |actual|
+    actual.should satisfy { |x| x == true || x == false }
+  end
+end
+
 module Stormpath
   module TestApiKeyHelpers
     TEST_ENV_REQUIRED_VARS = {
@@ -124,6 +130,12 @@ module Stormpath
         UUID.method(:random_create).call.to_s[0..9]
       end
     end
+  end
+end
+
+RSpec::Matchers.define :be_boolean do
+  match do |actual|
+    actual == true || actual == false
   end
 end
 

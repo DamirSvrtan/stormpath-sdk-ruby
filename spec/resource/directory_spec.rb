@@ -3,22 +3,24 @@ require 'spec_helper'
 describe Stormpath::Resource::Directory, :vcr do
 
   describe "instances should respond to attribute property methods" do
-    subject(:directory) { test_api_client.directories.create name: random_directory_name, description: 'description_for_some_test_directory' }
-
-    it { should be_instance_of Stormpath::Resource::Directory }
-
-    [:name, :description, :status].each do |property_accessor|
-      it { should respond_to property_accessor }
-      it { should respond_to "#{property_accessor}="}
-      its(property_accessor) { should be_instance_of String }
-    end
-
-    its(:tenant) { should be_instance_of Stormpath::Resource::Tenant }
-    its(:groups) { should be_instance_of Stormpath::Resource::Collection }
-    its(:accounts) { should be_instance_of Stormpath::Resource::Collection }
+    let(:directory) { test_api_client.directories.create name: random_directory_name, description: 'description_for_some_test_directory' }
 
     after do
       directory.delete if directory
+    end
+
+    it do
+      expect(directory).to be_a Stormpath::Resource::Directory
+
+      [:name, :description, :status].each do |property_accessor|
+        expect(directory).to respond_to(property_accessor)
+        expect(directory).to respond_to("#{property_accessor}=")
+        expect(directory.send property_accessor).to be_a String
+      end
+
+      expect(directory.tenant).to be_a Stormpath::Resource::Tenant
+      expect(directory.groups).to be_a Stormpath::Resource::Collection
+      expect(directory.accounts).to be_a Stormpath::Resource::Collection
     end
   end
 
