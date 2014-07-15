@@ -152,8 +152,6 @@ RSpec.configure do |c|
   c.include Stormpath::TestResourceHelpers
   c.include Stormpath::RandomResourceNameGenerator
 
-  c.treat_symbols_as_metadata_keys_with_true_values = true
-
   c.before(:all) do
     unless test_missing_env_vars.empty?
       set_up_message = "In order to run the specs of the Stormpath SDK you need to setup the following environment variables:\n\t"
