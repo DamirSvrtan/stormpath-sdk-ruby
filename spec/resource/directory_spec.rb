@@ -66,11 +66,11 @@ describe Stormpath::Resource::Directory, :vcr do
 
     let(:account) do
       Stormpath::Resource::Account.new({
-        email: "test@example.com",
+        email: random_email,
         given_name: 'Ruby SDK',
         password: 'P@$$w0rd',
         surname: 'SDK',
-        username: "username"
+        username: random_user_name
       })
     end
 
@@ -132,11 +132,11 @@ describe Stormpath::Resource::Directory, :vcr do
 
       it 'creates an account with custom data' do
         account =  Stormpath::Resource::Account.new({
-          email: "test@example.com",
+          email: random_email,
           given_name: 'Ruby SDK',
           password: 'P@$$w0rd',
           surname: 'SDK',
-          username: "username"
+          username: random_user_name
         })
 
         account.custom_data["birth_date"] = "2305-07-13"

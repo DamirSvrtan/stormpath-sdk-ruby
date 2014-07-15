@@ -634,11 +634,11 @@ properties
 
       let(:account) do
         account = Stormpath::Resource::Account.new({
-          email: "test@example.com",
+          email: random_email,
           givenName: 'Ruby SDK',
           password: 'P@$$w0rd',
           surname: 'SDK',
-          username: "testusername"
+          username: random_user_name
         })
         directory.create_account account
       end

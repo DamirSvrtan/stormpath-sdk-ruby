@@ -103,9 +103,9 @@ module Stormpath
       opts.tap do |o|
         o[:surname]    = (!opts[:surname].blank? && opts[:surname]) || 'surname'
         o[:given_name] = (!opts[:given_name].blank? && opts[:given_name]) || 'givenname'
-        o[:username]   = (!opts[:username].blank? && opts[:username]) || 'username'
+        o[:username]   = (!opts[:username].blank? && opts[:username]) || random_user_name
         o[:password]   = (!opts[:password].blank? && opts[:password]) || 'P@$$w0rd'
-        o[:email]      = (!opts[:email].blank? && opts[:email]) || 'test@example.com'
+        o[:email]      = (!opts[:email].blank? && opts[:email]) || random_email
       end
     end
   end
@@ -113,7 +113,7 @@ module Stormpath
   module RandomResourceNameGenerator
     include UUIDTools
 
-    %w(application directory group).each do |resource|
+    %w(application directory group user).each do |resource|
       define_method "random_#{resource}_name" do |suffix=nil|
         "#{random_string}_#{resource}_#{suffix}"
       end
