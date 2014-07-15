@@ -1,10 +1,17 @@
 require 'spec_helper'
 
 describe Stormpath::Resource::Application, :vcr do
-  let(:application) { test_application }
+  let(:app) { test_api_client.applications.create name: random_application_name, description: 'Dummy desc.' }
+  let(:application) { test_api_client.applications.get app.href }
   let(:directory) { test_api_client.directories.create name: random_directory_name }
 
+  before do
+   test_api_client.account_store_mappings.create({ application: app, account_store: directory,
+      list_index: 1, is_default_account_store: true, is_default_group_store: true })
+  end
+
   after do
+    application.delete if application
     directory.delete if directory
   end
 
@@ -101,10 +108,6 @@ describe Stormpath::Resource::Application, :vcr do
       application.authenticate_account login_request
     end
 
-    before do
-      test_api_client.account_store_mappings.create({ application: application, account_store: directory })
-    end
-
     after do
       account.delete if account
     end
@@ -133,10 +136,6 @@ describe Stormpath::Resource::Application, :vcr do
     let(:password) {'P@$$w0rd' }
 
     let(:authentication_result) { application.authenticate_account login_request }
-
-    before do
-      test_api_client.account_store_mappings.create({ application: application, account_store: directory })
-    end
 
     after do
       account.delete if account
@@ -214,10 +213,6 @@ describe Stormpath::Resource::Application, :vcr do
 
         let(:sent_to_account) { application.send_password_reset_email account.email }
 
-        before do
-          test_api_client.account_store_mappings.create({ application: application, account_store: directory })
-        end
-
         after do
           account.delete if account
         end
@@ -256,10 +251,6 @@ describe Stormpath::Resource::Application, :vcr do
 
     let(:reset_password_account) do
       application.verify_password_reset_token password_reset_token
-    end
-
-    before do
-      test_api_client.account_store_mappings.create({ application: application, account_store: directory })
     end
 
     after do
