@@ -89,7 +89,7 @@ describe Stormpath::Resource::Account, :vcr do
       end
 
       it 'has one group membership resource' do
-        expect(account.group_memberships).to have(1).item
+        expect(account.group_memberships.count).to eq(1)
       end
 
       it 'adds and removes the group from the account' do

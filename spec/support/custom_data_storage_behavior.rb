@@ -336,7 +336,7 @@ shared_examples_for 'custom_data_storage' do
 
   it '#keys' do
     expect(custom_data_storage.custom_data.keys).to be_kind_of(Array)
-    expect(custom_data_storage.custom_data.keys).to have_at_least(3).items
+    expect(custom_data_storage.custom_data.keys.count).to eq(3)
     expect(custom_data_storage.custom_data.keys).to eq(custom_data_storage.custom_data.properties.keys)
   end
 
@@ -348,7 +348,7 @@ shared_examples_for 'custom_data_storage' do
   end
 
   it 'inner property holders clearing properly' do
-    expect(deleted_properties).to have(0).items
+    expect(deleted_properties.count).to eq(0)
 
     custom_data_storage.custom_data[:permissions] = 'NOOP'
 
@@ -358,12 +358,12 @@ shared_examples_for 'custom_data_storage' do
     custom_data_storage.custom_data.delete(:permissions)
     expect(custom_data_storage.custom_data[:permissions]).to be_nil
 
-    expect(deleted_properties).to have(1).items
+    expect(deleted_properties.count).to eq(1)
 
     custom_data_storage.custom_data.save
 
     expect(custom_data_storage.custom_data[:permissions]).to be_nil
-    expect(deleted_properties).to have(0).items
+    expect(deleted_properties.count).to eq(0)
 
     custom_data_storage.custom_data[:permissions] = 'NOOP'
     expect(custom_data_storage.custom_data[:permissions]).to eq("NOOP")
@@ -371,7 +371,7 @@ shared_examples_for 'custom_data_storage' do
     custom_data_storage.custom_data.delete(:permissions)
     expect(custom_data_storage.custom_data[:permissions]).to be_nil
 
-    expect(deleted_properties).to have(1).items
+    expect(deleted_properties.count).to eq(1)
 
     if custom_data_storage.is_a? Stormpath::Resource::Account
       custom_data_storage.given_name = "Capt"
@@ -382,7 +382,7 @@ shared_examples_for 'custom_data_storage' do
     custom_data_storage.save
 
     expect(custom_data_storage.custom_data[:permissions]).to be_nil
-    expect(deleted_properties).to have(0).items
+    expect(deleted_properties.count).to eq(0)
   end
 
   def deleted_properties
