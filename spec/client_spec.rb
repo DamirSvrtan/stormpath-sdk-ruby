@@ -547,7 +547,7 @@ properties
           end
         end
 
-        after(:each) do
+        after(:each) do |example|
           unless example.metadata[:skip_cleanup]
             application.delete
             test_api_client.directories.each do |d|
