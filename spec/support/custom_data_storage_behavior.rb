@@ -266,7 +266,7 @@ shared_examples_for 'custom_data_storage' do
     custom_data_storage.custom_data[:rank] = "Captain"
     custom_data_storage.custom_data["favorite_drink"] = "Earl Grey Tea"
     custom_data_storage.custom_data.save
-    
+
     custom_data_storage.custom_data.delete(:rank)
     custom_data_storage.custom_data.save
 
@@ -277,19 +277,19 @@ shared_examples_for 'custom_data_storage' do
 
 
   it '#has_key?' do
-    expect(custom_data_storage.custom_data.has_key? "createdAt").to be_true
-    expect(custom_data_storage.custom_data.has_key? "created_at").not_to be_true
+    expect(custom_data_storage.custom_data.has_key? "createdAt").to be_truthy
+    expect(custom_data_storage.custom_data.has_key? "created_at").to be_falsey
   end
 
   it '#include?' do
-    expect(custom_data_storage.custom_data.include? "createdAt").to be_true
-    expect(custom_data_storage.custom_data.include? "created_at").not_to be_true
+    expect(custom_data_storage.custom_data.include? "createdAt").to be_truthy
+    expect(custom_data_storage.custom_data.include? "created_at").to be_falsey
   end
 
   it '#has_value?' do
     custom_data_storage.custom_data[:rank] = "Captain"
     custom_data_storage.custom_data.save
-    expect(reloaded_custom_data_storage.custom_data.has_value? "Captain").to be_true
+    expect(reloaded_custom_data_storage.custom_data.has_value? "Captain").to be_truthy
   end
 
   it '#store' do
